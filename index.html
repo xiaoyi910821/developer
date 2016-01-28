@@ -60,7 +60,7 @@ text-shadow:0px 1px 6px gray;
 	width: 9%;
 	height: 9%;
 	opacity: 1;
-	z-index: 999;
+	z-index: 1000;
 	
 
 }
@@ -97,7 +97,7 @@ svg{
 	position: absolute;
 	top:0;
 	z-index: 0;
-	opacity: 0;
+	opacity: 0.4;
 }
 audio{
 	display: none;
@@ -110,6 +110,10 @@ audio{
 </audio>-->
 	
 	<div id="cover1" style="left:0">
+			<div id="top1" style="top:40%;left:70%"></div>
+	<div id="top2" style="top:60%;left:40%"></div>
+	<div id="top3" style="top:15%;left:30%"></div>
+	<div id="top4" style="top:50%;left:90%"></div>
 		<svg  class="up" id="up-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 370 550" version="1.1"></svg>
 
 		<div class="title" style="right:0">click</div>
@@ -124,10 +128,7 @@ audio{
 		</svg>
 
 
-	<div id="top1" style="top:40%;left:70%"></div>
-	<div id="top2" style="top:60%;left:40%"></div>
-	<div id="top3" style="top:15%;left:30%"></div>
-	<div id="top4" style="top:50%;left:90%"></div>
+
 
 	</div>
 
@@ -156,7 +157,7 @@ audio{
 
 
 
-               $("#svg1-1, #svg1-2, #svg1-3, #svg1-4,#top1,#top2,#top3,#top4").lazylinepainter({
+               $("#svg1-1, #svg1-2, #svg1-3, #svg1-4").lazylinepainter({
                     'svgData': svgData,
                     'strokeWidth': 3,
                     'strokeColor': "#A39D89",
@@ -164,22 +165,31 @@ audio{
                   'delay':1550
                 });
 
+                $("#top1,#top2,#top3,#top4").lazylinepainter({
+                    'svgData': svgData,
+                    'strokeWidth': 3,
+                    'strokeColor': "#A39D89",
+                  'ease': 'easeInOutQuad',
+                  'delay':1550
+                });  
+                $("#top1,#top2,#top3,#top4").lazylinepainter('paint'); 
+
            
-               $("#top1,#top2,#top3,#top4,#svg1-1, #svg1-2, #svg1-3, #svg1-4").lazylinepainter('paint'); 
+               $("#svg1-1, #svg1-2, #svg1-3, #svg1-4").lazylinepainter('paint'); 
 
                  $("#up-left, #up-right").lazylinepainter({
                     'svgData': svgData,
                     'strokeWidth': 2,
                     'strokeColor': "#A39D89",
                   'ease': 'easeInOutQuad',
-                  'delay':850
+                  'delay':750
                 });
                $("#up-left, #up-right").lazylinepainter('paint'); 
                  
 
-                setTimeout(function(){$(".title").fadeTo(1000,0.7);}, 2500);
-                 setTimeout(function(){$(".up").fadeTo(2000,0.4);}, 1500);
-               setTimeout(function(){$("image").fadeTo(2000,1);}, 2500);
+                setTimeout(function(){$(".title").fadeTo(1000,0.7);}, 2200);
+                // setTimeout(function(){$(".up").fadeTo(1000,0.4);}, 200);
+               setTimeout(function(){$("image").fadeTo(2000,1);}, 2100);
 
 
                $(".title").click(function(){
