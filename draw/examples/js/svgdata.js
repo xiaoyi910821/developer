@@ -49,8 +49,8 @@ var svgData = {
 
         }],
         "dimensions": {
-            "width": 1000,
-            "height": 550
+            "width":960,
+            "height": 1450
         }
     },
 
@@ -62,8 +62,8 @@ var svgData = {
 
         }],
         "dimensions": {
-            "width": 1000,
-            "height": 550
+            "width": 960,
+            "height": 1450
         }
     },
     "top1": {

@@ -14,9 +14,9 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   width="1000"
+   width="970"
    height="1002"
-   viewBox="0 0 1000 1002"
+   viewBox="0 0 970 1002"
    sodipodi:docname="up.svg">
   <metadata
      id="metadata8">
@@ -48,7 +48,7 @@
        gradientTransform="matrix(0.31229159,0,0,0.22623178,723.39253,296.74185)"
        x1="110.00502"
        y1="435.14578"
-       x2="176.50059"
+       x2="176.5006"
        y2="435.14578" />
   </defs>
   <sodipodi:namedview
@@ -64,15 +64,16 @@
      inkscape:window-height="726"
      id="namedview4"
      showgrid="false"
-     inkscape:zoom="1.000998"
-     inkscape:cx="490.79555"
-     inkscape:cy="752.15455"
+     inkscape:zoom="0.75205075"
+     inkscape:cx="456.84461"
+     inkscape:cy="810.09458"
      inkscape:window-x="36"
-     inkscape:window-y="1"
+     inkscape:window-y="24"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg2" />
   <g
-     id="g4751">
+     id="g4751"
+     transform="translate(-9.3078824,0)">
     <g
        transform="translate(7.3883967,0.82093297)"
        id="g3776">
