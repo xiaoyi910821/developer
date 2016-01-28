@@ -105,9 +105,9 @@ audio{
 
 </style>
 <body>
-<!--<audio controls autoplay>
+-<audio id="myaudio"controls autoplay>
   <source src="dont-go.mp3" type="audio/mpeg">
-</audio>-->
+</audio>
 	
 	<div id="cover1" style="left:0">
 			<div id="top1" style="top:40%;left:70%"></div>
@@ -194,6 +194,7 @@ audio{
 
                $(".title").click(function(){
                	$(location).attr('href', 'http://lzhen.info/index/');
+               	$("#myaudio").pause();
 
                });
    
