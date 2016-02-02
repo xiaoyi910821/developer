@@ -1,0 +1,202 @@
+<html>
+  <head>
+    <style>
+body, html{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    overflow-x:hidden;
+      background: #f0f0f0; /* For browsers that do not support gradients */
+  background: -webkit-radial-gradient(white, #f8f8f8,  #f0f0f0); /* Safari 5.1 to 6.0 */
+  background: -o-radial-gradient(white, #f8f8f8,  #f0f0f0); /* For Opera 11.6 to 12.0 */
+  background: -moz-radial-gradient(white, #f8f8f8,  #f0f0f0); /* For Firefox 3.6 to 15 */
+  background: radial-gradient(white, #f8f8f8,  #f0f0f0); /* Standard syntax */
+}
+.node {
+  opacity: 0.5;
+}
+
+.node:hover {
+  opacity: 1;
+}
+
+.link {
+  stroke: silver;
+  stroke-opacity: 0.4;
+}
+
+#viz{
+    width: 100%;
+    height: 100%;
+}
+#pannel{
+    top:0;
+    min-height: 300px;
+    left: 0;
+    position: absolute;
+    box-shadow: 0px 0px 5px 0px silver;
+    width: 100%;
+    height: 40%;
+    opacity: 0;
+    text-align: center;
+    background:rgba(255, 255, 255, 0.65);
+     text-transform: uppercase;letter-spacing: 3px;
+     font-family: 'Raleway',sans-serif;
+}
+.title{
+   
+    padding-top: 2%;
+    line-height: 60px;
+    font-size: 40px;
+    word-spacing: 6px;
+    
+}
+.title em{
+    font-size:15px;
+    font-style: normal;
+}
+#pannel img{
+    width: 2%;
+    max-width: 40px;
+    margin: 1% 2.6%;
+}
+
+
+    </style>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="pannel">
+       <p class="title">
+        who we are<br>
+        <em>FAMILY ALLIANCE FOR COUNSELING TOOLS & RESOLUTION</em>
+       </p>
+
+       <p class="social">
+        connect with us today
+       </p>
+       <img src="images/facebook.png" />
+        <img src="images/email.png" />
+         <img src="images/link.png" />
+          <img src="images/google.png" />
+    </div>
+    <div id="viz"></div>
+
+    <script>
+$(document).ready(function(){
+           $("#pannel").animate({
+        height: "50%",
+        opacity: "1"
+    }, 1500);
+        
+
+});
+</script>
+
+    <script>
+
+
+
+function name(d) { return d.name; }
+function group(d) { return d.group; }
+
+//var color = d3.scale.category20();
+//function colorByGroup(d) { return color(group(d)); }
+
+var width = window.innerWidth,
+    height = window.innerHeight;
+
+var svg = d3.select('#viz')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height);
+
+var node, link;
+
+var voronoi = d3.geom.voronoi()
+    .x(function(d) { return d.x; })
+    .y(function(d) { return d.y; })
+    .clipExtent([[-30, -30], [width+5, height+5]]);
+
+function recenterVoronoi(nodes) {
+    var shapes = [];
+    voronoi(nodes).forEach(function(d) {
+        if ( !d.length ) return;
+        var n = [];
+        d.forEach(function(c){
+            n.push([ c[0] - d.point.x, c[1] - d.point.y ]);
+        });
+        n.point = d.point;
+        shapes.push(n);
+    });
+    return shapes;
+}
+
+var force = d3.layout.force()
+    .charge(-3000)
+    .friction(0.3)
+    .linkDistance(140)
+    .size([width, height]);
+
+force.on('tick', function() {
+    node.attr('transform', function(d) { return 'translate('+d.x+','+d.y+')'; })
+        .attr('clip-path', function(d) { return 'url(#clip-'+d.index+')'; });
+
+    link.attr('x1', function(d) { return d.source.x; })
+        .attr('y1', function(d) { return d.source.y; })
+        .attr('x2', function(d) { return d.target.x; })
+        .attr('y2', function(d) { return d.target.y; });
+
+    var clip = svg.selectAll('.clip')
+        .data( recenterVoronoi(node.data()), function(d) { return d.point.index; } );
+
+    clip.enter().append('clipPath')
+        .attr('id', function(d) { return 'clip-'+d.point.index; })
+        .attr('class', 'clip');
+    clip.exit().remove()
+
+    clip.selectAll('path').remove();
+    clip.append('path')
+        .attr('d', function(d) { return 'M'+d.join(',')+'Z'; });
+});
+
+d3.json('miserables.json', function(err, data) {
+
+    data.nodes.forEach(function(d, i) {
+        d.id = i;
+    });
+
+    link = svg.selectAll('.link')
+        .data( data.links )
+      .enter().append('line')
+        .attr('class', 'link')
+        .style("stroke-width", function(d) { return Math.sqrt(d.value); });
+
+    node = svg.selectAll('.node')
+        .data( data.nodes )
+      .enter().append('g')
+        .attr('title', name)
+        .attr('class', 'node')
+        .call( force.drag );
+
+    node.append('circle')
+        .attr('r', 23)
+        .attr('fill', group)
+        .attr('fill-opacity', 0.5);
+
+    node.append('circle')
+        .attr('r', 2)
+        .attr('stroke', 'silver');
+
+    force
+        .nodes( data.nodes )
+        .links( data.links )
+        .start();
+});
+
+
+
+    </script>
+  </body>
+</html>
