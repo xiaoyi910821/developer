@@ -31,7 +31,7 @@ body, html{
 }
 #pannel{
     top:0;
-    min-height: 300px;
+    min-height: 330px;
     left: 0;
     position: absolute;
     box-shadow: 0px 0px 5px 0px silver;
@@ -44,7 +44,7 @@ body, html{
      font-family: 'Raleway',sans-serif;
 }
 .title{
-   margin: 1.5%;
+   
     padding-top: 2%;
     line-height: 60px;
     font-size: 40px;
@@ -60,14 +60,6 @@ body, html{
     max-width: 40px;
     margin: 1% 2.6%;
 }
-.social{
-    font-size: 10px;
-}
-.title a{
-    text-decoration: none;
-    color: black;
-    font-style: normal;
-}
 
 
     </style>
@@ -78,16 +70,16 @@ body, html{
     <div id="pannel">
        <p class="title">
         who we are<br>
-        <em>FAMILY ALLIANCE FOR COUNSELING TOOLS & RESOLUTION<br>
-            <a href="http://factr.org">enter</a>
-        </em>
+        <em>FAMILY ALLIANCE FOR COUNSELING TOOLS & RESOLUTION</em>
        </p>
-       <p class="social">connect with us today<br>
+
+       <p class="social">
+        connect with us today
+       </p>
        <img src="images/facebook.png" />
         <img src="images/email.png" />
          <img src="images/link.png" />
           <img src="images/google.png" />
-      </p>
     </div>
     <div id="viz"></div>
 
@@ -120,9 +112,7 @@ var svg = d3.select('#viz')
     .attr('width', width)
     .attr('height', height);
 
-var node, link, text;
-
-
+var node, link;
 
 var voronoi = d3.geom.voronoi()
     .x(function(d) { return d.x; })
@@ -146,7 +136,7 @@ function recenterVoronoi(nodes) {
 var force = d3.layout.force()
     .charge(-3000)
     .friction(0.3)
-    .linkDistance(150)
+    .linkDistance(140)
     .size([width, height]);
 
 force.on('tick', function() {
@@ -186,19 +176,18 @@ d3.json('miserables.json', function(err, data) {
     node = svg.selectAll('.node')
         .data( data.nodes )
       .enter().append('g')
+        .attr('title', name)
         .attr('class', 'node')
         .call( force.drag );
 
     node.append('circle')
-        .attr('r', 22)
+        .attr('r', 23)
         .attr('fill', group)
         .attr('fill-opacity', 0.5);
 
     node.append('circle')
         .attr('r', 2)
-        .attr('stroke', '#e8e8e8');
-
-var labels = node.append("text").text(name);
+        .attr('stroke', 'silver');
 
     force
         .nodes( data.nodes )
